@@ -1,16 +1,19 @@
 <template>
-  <b-table
-    :striped="striped"
-    :bordered="bordered"
-    :borderless="borderless"
-    :outlined="outlined"
-    :small="small"
-    :hover="hover"
-    :dark="dark"
-    :fixed="fixed"
-    :foot-clone="footClone"
-    :items="items"
-  />
+  <div>
+    <b-table
+      :striped="striped"
+      :bordered="bordered"
+      :borderless="borderless"
+      :outlined="outlined"
+      :small="small"
+      :hover="hover"
+      :dark="dark"
+      :fixed="fixed"
+      :foot-clone="footClone"
+      :items="items"
+    />
+    <h1>{{ yob }}{{ name }}{{ yod }}</h1>
+  </div>
 </template>
 
 <script>
@@ -28,8 +31,8 @@ export default {
       loading: false,
       data: null,
       error: null,
-      startYear: 1900,
-      endYear: 2025,
+      startYear: -1000,
+      endYear: 2019,
       items: [],
       striped: false,
       bordered: false,
@@ -39,7 +42,14 @@ export default {
       hover: false,
       dark: false,
       fixed: false,
-      footClone: false
+      footClone: false,
+      name: "",
+      yob: "",
+      yod: "",
+      mode: "",
+      currentNoOfDecades: 0,
+      remaningNoOfDecades: 0
+
     }
   },
   created () {
@@ -66,11 +76,12 @@ export default {
       this.$http.get(`https://dev-util.edyst.com/challenge/person/${this.startYear}?end_yob=${this.endYear}`)
         .then(({data}) => {
           Array(noOfRow).fill().map(() => {
-            const endYear = this.startYear + 100
+            this.startYear = this.startYear === 0 ? 1 : this.startYear
+            const isPositive = this.startYear > 0
+            const endYear = this.startYear + 99
             const isLastRow = endYear > this.endYear
-            console.log(isLastRow, noOfDecades)
             this.items.push({
-              strat: `${(this.startYear + 1)} AD` ,
+              start: `${isPositive ? this.startYear : (this.startYear * -1)} ${isPositive ? 'AD' : 'BC'}` ,
               d1: isLastRow ? noOfDecades >= 1 ? '*' : '' : '*',
               d2: isLastRow ? noOfDecades >= 2 ? '*' : '' : '*',
               d3: isLastRow ? noOfDecades >= 3 ? '*' : '' : '*',
@@ -81,24 +92,82 @@ export default {
               d8: isLastRow ? noOfDecades >= 8 ? '*' : '' : '*',
               d9: isLastRow ? noOfDecades >= 9 ? '*' : '' : '*',
               d10: isLastRow ? noOfDecades > 10 ? '*' : '' : '*',
-              end: `${(isLastRow ? this.endYear : endYear)} AD`
+              end: `${isLastRow ? this.endYear : isPositive ? endYear : (endYear * -1)} ${isPositive ? 'AD' : 'BC'}`
             })
             this.startYear += 100
           })
-          this.updateData(1, data)
+          this.updateData(data)
           this.loading = false
         })
         .catch(() => this.isLoading = false)
     },
-    updateData (i, data) {
-      let that = this
-      const item = data.shift()
-      setTimeout(function () {
-        i++
-        if (i < 10) {
-          that.updateData(i, data);
+    updateData (data) {
+      if (data.length) {
+        let that = this
+        const timeline = data.shift()
+        let splitTimeline = ((timeline.yod -timeline.yob)/10).toString().split(".")
+        if (timeline.yob < 0) {
+          splitTimeline = (((timeline.yob * -1) - (timeline.yod * -1))/10).toString().split(".")
         }
-      }, 3000)
+        let noOfDecades = +splitTimeline[0]
+        if (splitTimeline[1]) {
+          noOfDecades += 1
+        }
+        setTimeout(function () {
+          const newItems = []
+          that.items.map(item => {
+            let startIndex = 0
+            let decadeStart = +item.start.split(" ")[0]
+            let decadeEnd = +item.end.split(" ")[0]
+            if (decadeStart > decadeEnd) {
+              decadeStart *= -1
+              decadeEnd *= -1
+            }
+
+            Array(10).fill().map((value, index) => {
+              if (item[`d${index + 1}`].length) {
+                item[`d${index + 1}`] = "*"
+              }
+            })
+
+            if ((decadeStart <= timeline.yob) && (timeline.yob <= decadeEnd)) {
+              decadeStart -= 1
+              Array(10).fill().map((value, index) => {
+                if ((decadeStart) <= timeline.yob) {
+                  decadeStart += 10
+                  startIndex = index + 1
+                }
+              })
+            }
+
+            if (startIndex) {
+              that.currentNoOfDecades = 11 - startIndex
+              that.remaningNoOfDecades = noOfDecades - that.currentNoOfDecades
+              Array(that.currentNoOfDecades).fill().map(() => {
+                if (item[`d${startIndex}`].length) {
+                  item[`d${startIndex}`] = "+"
+                }
+                startIndex += 1
+              })
+            } else if (that.remaningNoOfDecades > 0) {
+              startIndex = 1
+              Array(that.remaningNoOfDecades).fill().map(() => {
+                if (item[`d${startIndex}`].length) {
+                  item[`d${startIndex}`] = "+"
+                }
+                startIndex += 1
+              })
+              that.remaningNoOfDecades = 0
+            }
+            that.name = timeline.name
+            that.yob = timeline.yob
+            that.yod = timeline.yod
+            newItems.push(item)
+          })
+          that.items = newItems
+          that.updateData(data)
+        }, 7000)
+      }
     }
   }
 }
