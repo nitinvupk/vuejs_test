@@ -195,7 +195,7 @@ export default {
             }
 
             Array(10).fill().map((value, index) => {
-              if (item[`d${index + 1}`].length) {
+              if (item[`d${index + 1}`] && item[`d${index + 1}`].length) {
                 item[`d${index + 1}`] = "*"
               }
             })
