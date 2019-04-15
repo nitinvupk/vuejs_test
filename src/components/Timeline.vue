@@ -13,78 +13,130 @@
       :items="items"
       :tbody-tr-class="tbClass"
     >
-      <template slot="d1" slot-scope="row">
-        <div class="square-box" v-if="row.value === '+'">
-        </div>
-        <div v-if="row.value === '*'">
+      <template
+        slot="d1"
+        slot-scope="row"
+      >
+        <div
+          v-if="row.value === '+'"
+          class="square-box"
+        />
+        <div v-else-if="row.value === '*'">
           *
         </div>
       </template>
-      <template slot="d2" slot-scope="row">
-        <div class="square-box" v-if="row.value === '+'">
-        </div>
-        <div v-if="row.value === '*'">
+      <template
+        slot="d2"
+        slot-scope="row"
+      >
+        <div
+          v-if="row.value === '+'"
+          class="square-box"
+        />
+        <div v-else-if="row.value === '*'">
           *
         </div>
       </template>
-      <template slot="d3" slot-scope="row">
-        <div class="square-box" v-if="row.value === '+'">
-        </div>
-        <div v-if="row.value === '*'">
+      <template
+        slot="d3"
+        slot-scope="row"
+      >
+        <div
+          v-if="row.value === '+'"
+          class="square-box"
+        />
+        <div v-else-if="row.value === '*'">
           *
         </div>
       </template>
-      <template slot="d4" slot-scope="row">
-        <div class="square-box" v-if="row.value === '+'">
-        </div>
-        <div v-if="row.value === '*'">
+      <template
+        slot="d4"
+        slot-scope="row"
+      >
+        <div
+          v-if="row.value === '+'"
+          class="square-box"
+        />
+        <div v-else-if="row.value === '*'">
           *
         </div>
       </template>
-      <template slot="d5" slot-scope="row">
-        <div class="square-box" v-if="row.value === '+'">
-        </div>
-        <div v-if="row.value === '*'">
+      <template
+        slot="d5"
+        slot-scope="row"
+      >
+        <div
+          v-if="row.value === '+'"
+          class="square-box"
+        />
+        <div v-else-if="row.value === '*'">
           *
         </div>
       </template>
-      <template slot="d6" slot-scope="row">
-        <div class="square-box" v-if="row.value === '+'">
-        </div>
-        <div v-if="row.value === '*'">
+      <template
+        slot="d6"
+        slot-scope="row"
+      >
+        <div
+          v-if="row.value === '+'"
+          class="square-box"
+        />
+        <div v-else-if="row.value === '*'">
           *
         </div>
       </template>
-      <template slot="d7" slot-scope="row">
-        <div class="square-box" v-if="row.value === '+'">
-        </div>
-        <div v-if="row.value === '*'">
+      <template
+        slot="d7"
+        slot-scope="row"
+      >
+        <div
+          v-if="row.value === '+'"
+          class="square-box"
+        />
+        <div v-else-if="row.value === '*'">
           *
         </div>
       </template>
-      <template slot="d8" slot-scope="row">
-        <div class="square-box" v-if="row.value === '+'">
-        </div>
-        <div v-if="row.value === '*'">
+      <template
+        slot="d8"
+        slot-scope="row"
+      >
+        <div
+          v-if="row.value === '+'"
+          class="square-box"
+        />
+        <div v-else-if="row.value === '*'">
           *
         </div>
       </template>
-      <template slot="d9" slot-scope="row">
-        <div class="square-box" v-if="row.value === '+'">
-        </div>
-        <div v-if="row.value === '*'">
+      <template
+        slot="d9"
+        slot-scope="row"
+      >
+        <div
+          v-if="row.value === '+'"
+          class="square-box"
+        />
+        <div v-else-if="row.value === '*'">
           *
         </div>
       </template>
-      <template slot="d10" slot-scope="row">
-        <div class="square-box" v-if="row.value === '+'">
-        </div>
-        <div v-if="row.value === '*'">
+      <template
+        slot="d10"
+        slot-scope="row"
+      >
+        <div
+          v-if="row.value === '+'"
+          class="square-box"
+        />
+        <div v-else-if="row.value === '*'">
           *
         </div>
       </template>
     </b-table>
-    <h1 class="text-white">{{ name }}</h1>
+    <h1 class="text-white">
+      {{ name }}
+    </h1>
   </div>
 </template>
 
