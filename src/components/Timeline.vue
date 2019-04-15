@@ -117,7 +117,7 @@ export default {
       footClone: false,
       name: "",
       currentNoOfDecades: 0,
-      remaningNoOfDecades: 0,
+      remainingNoOfDecades: 0,
       tbClass: "text-white"
 
     }
@@ -128,18 +128,18 @@ export default {
   methods: {
     fetchData () {
       this.loading = true
-      const noOfCentury = (this.endYear - this.startYear)/100 //3.18
+      const noOfCentury = (this.endYear - this.startYear)/100
       const splitCentury = noOfCentury.toString().split('.')
       let noOfRow = +splitCentury[0]
       let noOfCol = 12
-      const remaningYear = +splitCentury[1]
-      const splitDecades = (remaningYear/10).toString().split('.')
+      const remainingYear = +splitCentury[1]
+      const splitDecades = (remainingYear/10).toString().split('.')
       let noOfDecades = +splitDecades[0]
       if (+splitDecades[0] > 0) {
         noOfDecades += 1
       }
 
-      if (remaningYear > 0) {
+      if (remainingYear > 0) {
         noOfRow += 1
       }
 
@@ -212,26 +212,24 @@ export default {
 
             if (startIndex) {
               that.currentNoOfDecades = 11 - startIndex
-              that.remaningNoOfDecades = noOfDecades - that.currentNoOfDecades
+              that.remainingNoOfDecades = noOfDecades - that.currentNoOfDecades
               Array(that.currentNoOfDecades).fill().map(() => {
                 if (item[`d${startIndex}`] && item[`d${startIndex}`].length) {
                   item[`d${startIndex}`] = "+"
                 }
                 startIndex += 1
               })
-            } else if (that.remaningNoOfDecades > 0) {
+            } else if (that.remainingNoOfDecades > 0) {
               startIndex = 1
-              Array(that.remaningNoOfDecades).fill().map(() => {
+              Array(that.remainingNoOfDecades).fill().map(() => {
                 if (item[`d${startIndex}`] && item[`d${startIndex}`].length) {
                   item[`d${startIndex}`] = "+"
                 }
                 startIndex += 1
               })
-              that.remaningNoOfDecades = 0
+              that.remainingNoOfDecades = 0
             }
             that.name = timeline.name
-            that.yob = timeline.yob
-            that.yod = timeline.yod
             newItems.push(item)
           })
           that.items = newItems
@@ -253,19 +251,5 @@ table > thead {
   height:12px;
   max-width: 12px;
   margin:0 auto;
-}
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
 }
 </style>
