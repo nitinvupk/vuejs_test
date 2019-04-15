@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="w-50 mx-auto table-responsive">
     <b-table
       :striped="striped"
       :bordered="bordered"
@@ -11,8 +11,80 @@
       :fixed="fixed"
       :foot-clone="footClone"
       :items="items"
-    />
-    <h1>{{ yob }}{{ name }}{{ yod }}</h1>
+      :tbody-tr-class="tbClass"
+    >
+      <template slot="d1" slot-scope="row">
+        <div class="square-box" v-if="row.value === '+'">
+        </div>
+        <div v-if="row.value === '*'">
+          *
+        </div>
+      </template>
+      <template slot="d2" slot-scope="row">
+        <div class="square-box" v-if="row.value === '+'">
+        </div>
+        <div v-if="row.value === '*'">
+          *
+        </div>
+      </template>
+      <template slot="d3" slot-scope="row">
+        <div class="square-box" v-if="row.value === '+'">
+        </div>
+        <div v-if="row.value === '*'">
+          *
+        </div>
+      </template>
+      <template slot="d4" slot-scope="row">
+        <div class="square-box" v-if="row.value === '+'">
+        </div>
+        <div v-if="row.value === '*'">
+          *
+        </div>
+      </template>
+      <template slot="d5" slot-scope="row">
+        <div class="square-box" v-if="row.value === '+'">
+        </div>
+        <div v-if="row.value === '*'">
+          *
+        </div>
+      </template>
+      <template slot="d6" slot-scope="row">
+        <div class="square-box" v-if="row.value === '+'">
+        </div>
+        <div v-if="row.value === '*'">
+          *
+        </div>
+      </template>
+      <template slot="d7" slot-scope="row">
+        <div class="square-box" v-if="row.value === '+'">
+        </div>
+        <div v-if="row.value === '*'">
+          *
+        </div>
+      </template>
+      <template slot="d8" slot-scope="row">
+        <div class="square-box" v-if="row.value === '+'">
+        </div>
+        <div v-if="row.value === '*'">
+          *
+        </div>
+      </template>
+      <template slot="d9" slot-scope="row">
+        <div class="square-box" v-if="row.value === '+'">
+        </div>
+        <div v-if="row.value === '*'">
+          *
+        </div>
+      </template>
+      <template slot="d10" slot-scope="row">
+        <div class="square-box" v-if="row.value === '+'">
+        </div>
+        <div v-if="row.value === '*'">
+          *
+        </div>
+      </template>
+    </b-table>
+    <h1 class="text-white">{{ name }}</h1>
   </div>
 </template>
 
@@ -44,11 +116,9 @@ export default {
       fixed: false,
       footClone: false,
       name: "",
-      yob: "",
-      yod: "",
-      mode: "",
       currentNoOfDecades: 0,
-      remaningNoOfDecades: 0
+      remaningNoOfDecades: 0,
+      tbClass: "text-white"
 
     }
   },
@@ -144,7 +214,7 @@ export default {
               that.currentNoOfDecades = 11 - startIndex
               that.remaningNoOfDecades = noOfDecades - that.currentNoOfDecades
               Array(that.currentNoOfDecades).fill().map(() => {
-                if (item[`d${startIndex}`].length) {
+                if (item[`d${startIndex}`] && item[`d${startIndex}`].length) {
                   item[`d${startIndex}`] = "+"
                 }
                 startIndex += 1
@@ -152,7 +222,7 @@ export default {
             } else if (that.remaningNoOfDecades > 0) {
               startIndex = 1
               Array(that.remaningNoOfDecades).fill().map(() => {
-                if (item[`d${startIndex}`].length) {
+                if (item[`d${startIndex}`] && item[`d${startIndex}`].length) {
                   item[`d${startIndex}`] = "+"
                 }
                 startIndex += 1
@@ -166,7 +236,7 @@ export default {
           })
           that.items = newItems
           that.updateData(data)
-        }, 7000)
+        }, 2000)
       }
     }
   }
@@ -174,7 +244,16 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
+table > thead {
+  display:none !important;
+}
+.square-box {
+  background: #F1C239;
+  height:12px;
+  max-width: 12px;
+  margin:0 auto;
+}
 h3 {
   margin: 40px 0 0;
 }
